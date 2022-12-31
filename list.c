@@ -122,7 +122,7 @@ BOOL L_free(LIST* pList)
 // Input:	pointer to the list structure
 // Output:	a number of the printed elements
 ////////////////////////////////////////////////
-int L_print(LIST* pList)
+int L_print(LIST* pList, void print(const void*))
 {
 	NODE* tmp;
 	int		c = 0;
@@ -131,7 +131,7 @@ int L_print(LIST* pList)
 
 	printf("\n");
 	for (tmp = pList->head.next; tmp; tmp = tmp->next, c++)
-		printf(" %d ", tmp->key);
+		print(tmp->key);
 	printf("\n");
 	return c;
 }

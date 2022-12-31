@@ -30,6 +30,6 @@ NODE* L_find(NODE* pNode, DATA Value, int compare(const void*, const void*));		/
 
 BOOL L_free(LIST* pList);					// free list memory
 
-int L_print(LIST* pList);					// print the list content
+int L_print(LIST* pList, void print(const void*));					// print the list content
 
 #endif
