@@ -38,7 +38,8 @@ void	pay(Customer* pCustomer)
 	if (!pCustomer->pCart)
 		return;
 	printf("---------- Cart info and bill for %s ----------\n", pCustomer->name);
-	printShoppingCart(pCustomer->pCart);
+	pCustomer->totalSpend += printShoppingCart(pCustomer->pCart);
+	pCustomer->shopTimes++;
 	printf("!!! --- Payment was recived!!!! --- \n");
 	freeShoppingCart(pCustomer->pCart);
 	free(pCustomer->pCart);
@@ -61,3 +62,35 @@ void	freeCustomer(Customer* pCust)
 		pay(pCust); //will free every thing
 	free(pCust->name);
 }
+
+int comapreCustomerByName(void* v1, void* v2)
+{
+	Customer* c1 = (Customer*)v1;
+	Customer* c2 = (Customer*)v2;
+	return strcmp(c1->name, c2->name);
+}
+
+int comapreCustomerByShopTimes(void* v1, void* v2)
+{
+	Customer* c1 = (Customer*)v1;
+	Customer* c2 = (Customer*)v2;
+	return c1->shopTimes - c2->shopTimes;
+}
+
+int comapreCustomerByTotalSpend(void* v1, void* v2)
+{
+	Customer* c1 = (Customer*)v1;
+	Customer* c2 = (Customer*)v2;
+	if (c1->totalSpend < c2->totalSpend) {
+		return -1;
+	}
+	else if (c1->totalSpend > c2->totalSpend) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+
+

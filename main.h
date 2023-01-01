@@ -5,7 +5,7 @@
 
 typedef enum
 {
-	eShowSuperMarket, eAddProduct, eAddCustomer, eCustomerDoShopping,ePrintCart,eCustomerPay,
+	eShowSuperMarket, eAddProduct, eAddCustomer, eCustomerDoShopping,ePrintCart,eCustomerPay,eSortCustomer,
 	ePrintProductByType, eNofOptions
 } eMenuOptions;
 

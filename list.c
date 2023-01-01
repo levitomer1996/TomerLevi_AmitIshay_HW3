@@ -1,4 +1,4 @@
-/**************/
+
 /*   list.c   */
 /**************/
 
@@ -13,9 +13,9 @@
 // Input:	pointer to the list structure
 // Output:	TRUE if succeeded
 //////////////////////////////////////////
-BOOL L_init(LIST* pList)
+BOOL L_init(LIST * pList)
 {
-	if ( pList == NULL ) return False;	// no list to initialize
+	if (pList == NULL) return False;	// no list to initialize
 
 	pList->head.next = NULL;
 	return True;
@@ -29,20 +29,30 @@ BOOL L_init(LIST* pList)
 //			a value to be stored in the new node
 // Output:	pointer to the new node
 /////////////////////////////////////////////////////////////////
-NODE* L_insert(NODE* pNode, DATA Value)
+NODE* L_insert(NODE* pNode, DATA Value, int compare(const void*, const void*))
 {
-	NODE* tmp;
+	NODE* temp = (NODE*)malloc(sizeof(NODE));
 
-	if ( !pNode ) return NULL;
-
-	tmp = (NODE*)malloc(sizeof(NODE));	// new node
-
-	if ( tmp != NULL )  {
-		tmp->key = Value;
-		tmp->next = pNode->next;
-		pNode->next = tmp;
+	if (temp == NULL || pNode == NULL) {
+		return NULL;
 	}
-	return tmp;
+	NODE* current = pNode;
+	NODE* prev = NULL;
+	temp->key = Value;
+	while (current && compare(&current->key, &temp->key) > 0) {
+		prev = current;
+		current = current->next;
+	}
+	temp->next = current;
+	if (prev == NULL) {
+		pNode = temp;
+	}
+	else {
+		prev->next = temp;
+	}
+
+	return temp;
+
 }
 
 
@@ -52,16 +62,17 @@ NODE* L_insert(NODE* pNode, DATA Value)
 // Input:	pointer to the node BEFORE the node to be deleted 
 // Output:	TRUE if succeeded
 //////////////////////////////////////////////////////////////
-BOOL L_delete(NODE* pNode,void (*freeFunc)(void*))
+BOOL L_delete(NODE* pNode, BOOL isFree)
 {
-	NODE* tmp;
+	NODE* temp;
 
-	if ( !pNode || !(tmp = pNode->next) ) return False;
+	if (!pNode || !(temp = pNode->next)) return False;
 
-	pNode->next = tmp->next;
-	if (freeFunc != NULL)
-		freeFunc(tmp->key);
-	free(tmp);
+	pNode->next = temp->next;
+	if (isFree) {
+		free(temp);
+	}
+
 	return True;
 }
 
@@ -73,23 +84,17 @@ BOOL L_delete(NODE* pNode,void (*freeFunc)(void*))
 //			a value to be found
 // Output:	pointer to the node containing the Value
 /////////////////////////////////////////////////////////
-NODE* L_find(NODE* pNode, DATA value, int(*compare)(const void*, const void*))
+NODE* L_find(NODE* pNode, DATA Value, int compare(const void*, const void*))
 {
-	NODE* temp = NULL;
-	if ( !pNode ) return NULL;
-	while(pNode!= NULL)
+	NODE* temp = pNode;
+	while (temp != NULL)
 	{
-		if(compare(pNode->key,value) == 0)
-		{
-			temp = pNode;
-			break;
-		}
-		pNode = pNode->next;
+		if (compare(temp->key, Value) == 0)
+			return temp;
+		temp = temp->next;
 	}
 
-	return temp;
-
-
+	return NULL;
 }
 
 
@@ -99,18 +104,13 @@ NODE* L_find(NODE* pNode, DATA value, int(*compare)(const void*, const void*))
 // Input:	pointer to the list structure
 // Output:	TRUE if succeeded
 ////////////////////////////////////////////////
-BOOL L_free(LIST* pList, void (*freeFunc)(void*))
+BOOL L_free(LIST* pList)
 {
-	NODE *tmp;
+	NODE* tmp;
 
-	if ( !pList ) return False;
-	tmp = &(pList->head);
-	BOOL res=True;
-	while (res)
-	{
-		res = L_delete(tmp, freeFunc);
-	}
-	
+	if (!pList) return False;
+
+	for (tmp = &(pList->head); L_delete(tmp, True); );
 	return True;
 }
 
@@ -121,15 +121,15 @@ BOOL L_free(LIST* pList, void (*freeFunc)(void*))
 // Input:	pointer to the list structure
 // Output:	a number of the printed elements
 ////////////////////////////////////////////////
-int L_print(LIST* pList, void(*print)(const void*))
+int L_print(LIST* pList, void print(const void*))
 {
-	NODE	*tmp;
+	NODE* tmp;
 	int		c = 0;
 
-	if ( !pList ) return 0;
+	if (!pList) return 0;
 
 	printf("\n");
-	for ( tmp = pList->head.next;  tmp;  tmp = tmp->next, c++ )
+	for (tmp = pList->head.next; tmp; tmp = tmp->next, c++)
 		print(tmp->key);
 	printf("\n");
 	return c;

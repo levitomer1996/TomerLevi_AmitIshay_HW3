@@ -5,6 +5,9 @@
 #include "ShoppingCart.h"
 #include "list.h"
 
+typedef enum { SortedByName, SortedByShopTimes,SortedByTotalSpend, NotSorted, eNoOpt
+} SORTOPTIONS;
+
 typedef struct
 {
 	char*		name;
@@ -30,7 +33,7 @@ void fillCart(SuperMarket* pMarket, ShoppingCart* pCart);
 void	printProductByType(SuperMarket* pMarket);
 void	printAllProducts(const SuperMarket* pMarket);
 void	printAllCustomers(const SuperMarket* pMarket);
-
+void	sortCustomers(SuperMarket* pMarket);
 
 int		getProductIndexByBarcode(SuperMarket* pMarket, const char* barcode);
 Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode);
@@ -43,3 +46,4 @@ Product* getProductAndCount(SuperMarket* pMarket, int* pCount);
 
 void	freeMarket(SuperMarket* pMarket);
 
+void printSortEnum(SORTOPTIONS op);

@@ -16,7 +16,7 @@ int menu();
 
 
 const char* menuStrings[eNofOptions] = { "Show SuperMarket", "Add Product",
-								"Add Customer", "Customer Shopping","Print Shopping Cart","Customer Pay",
+								"Add Customer", "Customer Shopping","Print Shopping Cart","Customer Pay","Sort Customers",
 								"Print Product By Type"};
 
 int main()
@@ -63,6 +63,9 @@ int main()
 		case eCustomerPay:
 			if(!doPayment(&market))
 				printf("Error in payment\n");
+			break;
+		case eSortCustomer:
+			makeASort(&market);
 			break;
 
 		case ePrintProductByType:

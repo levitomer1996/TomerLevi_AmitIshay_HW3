@@ -10,7 +10,8 @@
 #include "General.h"
 #include "ShoppingCart.h"
 
-
+const char* sortOptions[eNoOpt] = { "Sorted by name", "Sorted by shop time",
+								"Sorted by money spent" };
 
 int		initSuperMarket(SuperMarket* pMarket)
 {
@@ -176,6 +177,37 @@ void	printAllCustomers(const SuperMarket* pMarket)
 		printCustomer(&pMarket->customerArr[i]);
 }
 
+void sortCustomers(SuperMarket* pMarket)
+{
+	if (pMarket->customerCount == 0) {
+		printf("Super market got no customers! \n");
+		return;
+	}
+	int choice = 0;
+	printf("How would you like to sort the customers: \n");
+
+	for (int i = 0; i < eNoOpt - 1 ; i++) {
+		printf("%d ) %s \n",i , sortOptions[i]);
+	}
+	scanf_s("%d", &choice);
+	
+	switch (choice)
+	{
+	case SortedByName:
+		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByName);
+		break;
+	case SortedByShopTimes:
+		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer*), comapreCustomerByShopTimes);
+		break;
+	case SortedByTotalSpend:
+		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer*), comapreCustomerByTotalSpend);
+		break;
+	default:
+		break;
+	}
+
+}
+
 
 Customer* getCustomerWhoShop(SuperMarket* pMarket)
 {
@@ -264,6 +296,25 @@ void	freeMarket(SuperMarket* pMarket)
 	
 }
 
+void printSortEnum(SORTOPTIONS op)
+{
+	switch (op)
+	{
+	case SortedByName:
+		printf("Sort by name \n");
+		break;
+	case SortedByShopTimes:
+		printf("Sort by shop times \n");
+		break;
+	case SortedByTotalSpend:
+		printf("Sort by money spent \n");
+		break;
+
+	default:
+		break;
+	}
+}
+
 void	getUniquBarcode(char* barcode, SuperMarket* pMarket)
 {
 	int cont = 1;
@@ -287,8 +338,16 @@ int getProductIndexByBarcode(SuperMarket* pMarket, const char* barcode)
 
 Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode)
 {
-	
-
+    NODE* temp = &pMarket->products.head;
+    while (temp != NULL) {
+        Product* tempProd = temp->key;
+		printProduct(tempProd);
+        if (strcmp(tempProd->barcode, barcode) == 0) {
+            return tempProd;
+        }
+        temp = temp->next;
+    }
+    return NULL;
 }
 
 Customer* FindCustomerByName(SuperMarket* pMarket, const char* name)

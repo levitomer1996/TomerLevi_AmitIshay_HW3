@@ -1,3 +1,4 @@
+#include "Supermarket.h"
 #ifndef __GENERAL__
 #define __GENERAL__
 
@@ -14,6 +15,8 @@ float	getPositiveFloat(const char* msg);
 int		getPositiveInt(const char* msg);
 int		countCharInString(const char* str, char tav);
 int		checkEmptyString(char* str);
+
+void	makeASort(SuperMarket* pMarket);
 
 #endif
 
