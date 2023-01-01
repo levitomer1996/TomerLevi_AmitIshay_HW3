@@ -95,7 +95,6 @@ NODE* L_find(NODE* pNode, DATA Value, int compare(const void*, const void*))
 		temp = temp->next;
 	}
 
-	return NULL;
 }
 
 
@@ -111,7 +110,6 @@ BOOL L_free(LIST* pList)
 
 	if (!pList) return False;
 
-	for (tmp = &(pList->head); L_delete(tmp,True); );
 	return True;
 }
 
