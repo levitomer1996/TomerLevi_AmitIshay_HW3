@@ -3,7 +3,9 @@
 
 typedef struct
 {
-	char*			name;
+	char*	name;
+	int*	shopTimes;
+	float totalSpend;
 	ShoppingCart*	pCart;
 }Customer;
 

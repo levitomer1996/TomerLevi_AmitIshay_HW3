@@ -13,14 +13,15 @@ int	initCustomer(Customer* pCustomer)
 		if (!pCustomer->name)
 			return 0;
 	} while (checkEmptyString(pCustomer->name));
-	
+	pCustomer->shopTimes = 0;
+	pCustomer->totalSpend = 0;
 	pCustomer->pCart = NULL;
 	return 1;
 }
 
 void	printCustomer(const Customer* pCustomer)
 {
-	printf("Name: %s\t", pCustomer->name);
+	printf("Name: %s\t, times shopped: %d,\t total spent: %f ", pCustomer->name,pCustomer->shopTimes,pCustomer->totalSpend);
 	
 	if (pCustomer->pCart == NULL)
 		printf("Shopping cart is empty!\n");
