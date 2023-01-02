@@ -13,13 +13,14 @@
 // Input:	pointer to the list structure
 // Output:	TRUE if succeeded
 //////////////////////////////////////////
-BOOL L_init(LIST * pList)
+BOOL L_init(LIST* pList)
 {
 	if (pList == NULL) return False;	// no list to initialize
 
 	pList->head.next = NULL;
 	return True;
 }
+
 
 
 /////////////////////////////////////////////////////////////////
@@ -31,28 +32,19 @@ BOOL L_init(LIST * pList)
 /////////////////////////////////////////////////////////////////
 NODE* L_insert(NODE* pNode, DATA Value, int compare(const void*, const void*))
 {
-	NODE* temp = (NODE*)malloc(sizeof(NODE));
+	NODE* newNode = (NODE*)malloc(sizeof(NODE));
+	if (newNode == NULL) return NULL;
+	newNode->key = Value;
 
-	if (temp == NULL || pNode == NULL) {
-		return NULL;
-	}
-	NODE* current = pNode;
-	NODE* prev = NULL;
-	temp->key = Value;
-	while (current && compare(&current->key, &temp->key) > 0) {
-		prev = current;
-		current = current->next;
-	}
-	temp->next = current;
-	if (prev == NULL) {
-		pNode = temp;
-	}
-	else {
-		prev->next = temp;
-	}
 
-	return temp;
 
+	NODE* curr = pNode;
+	while (curr->next != NULL && compare(Value, curr->next->key) >= 0) {
+		curr = curr->next;
+	}
+	newNode->next = curr->next;
+	curr->next = newNode;
+	return pNode;
 }
 
 
@@ -84,18 +76,23 @@ BOOL L_delete(NODE* pNode, BOOL isFree)
 //			a value to be found
 // Output:	pointer to the node containing the Value
 /////////////////////////////////////////////////////////
-NODE* L_find(NODE* pNode, DATA Value, int compare(const void*, const void*))
+NODE* L_find(NODE* pNode, DATA value, int(*compare)(const void*, const void*))
 {
-	NODE* temp = pNode;
-	while (temp != NULL)
+	NODE* temp = NULL;
+	if (!pNode) return NULL;
+	while (pNode != NULL)
 	{
-		if (compare(temp->key, Value) == 0)
-			return temp;
-		temp = temp->next;
+		if (compare(pNode->key, value) == 0)
+		{
+			temp = pNode;
+			break;
+		}
+		pNode = pNode->next;
 	}
 
-	return NULL;
+	return temp;
 }
+
 
 
 ////////////////////////////////////////////////

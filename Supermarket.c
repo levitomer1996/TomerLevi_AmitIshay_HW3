@@ -195,17 +195,19 @@ void sortCustomers(SuperMarket* pMarket)
 	{
 	case SortedByName:
 		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByName);
+		
 		break;
 	case SortedByShopTimes:
-		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer*), comapreCustomerByShopTimes);
+		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByShopTimes);
 		break;
 	case SortedByTotalSpend:
-		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer*), comapreCustomerByTotalSpend);
+		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByTotalSpend);
 		break;
 	default:
 		break;
 	}
-
+	printf("Customers %s \n", sortOptions[choice]);
+	printAllCustomers(pMarket);
 }
 
 
@@ -309,7 +311,6 @@ void printSortEnum(SORTOPTIONS op)
 	case SortedByTotalSpend:
 		printf("Sort by money spent \n");
 		break;
-
 	default:
 		break;
 	}
@@ -338,16 +339,17 @@ int getProductIndexByBarcode(SuperMarket* pMarket, const char* barcode)
 
 Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode)
 {
-    NODE* temp = &pMarket->products.head;
-    while (temp != NULL) {
-        Product* tempProd = temp->key;
-		printProduct(tempProd);
-        if (strcmp(tempProd->barcode, barcode) == 0) {
-            return tempProd;
-        }
-        temp = temp->next;
-    }
-    return NULL;
+	NODE* tmp;
+	
+
+	if (!(&pMarket->products.head)) return NULL;
+
+	printf("\n");
+	for (tmp = &pMarket->products.head.next; tmp; tmp = tmp->next)
+		printProduct(tmp->key);
+	printf("\n");
+	
+	return NULL;
 }
 
 Customer* FindCustomerByName(SuperMarket* pMarket, const char* name)
