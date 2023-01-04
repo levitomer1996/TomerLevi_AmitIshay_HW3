@@ -339,10 +339,10 @@ int getProductIndexByBarcode(SuperMarket* pMarket, const char* barcode)
 
 Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode)
 {
-	NODE* tmp;
-	
-
-	if (!(&pMarket->products.head)) return NULL;
+	Product tempP;
+	strcpy(tempP.barcode, barcode);
+	NODE* p = L_find(pMarket->products.head.next, &tempP, compareProductsByBarcode);
+	return p ? p->key : NULL;
 
 }
 
