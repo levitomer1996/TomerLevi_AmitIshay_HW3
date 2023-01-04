@@ -23,7 +23,9 @@ int main()
 {
 	
 	SuperMarket	market;
-	readSuperMarketFromBFile(&market);
+	
+	readSuperMarketFromBFile(&market); 
+	printSuperMarket(&market);
 	if (!initSuperMarket(&market))
 	{
 		printf("error init  Super Market");
@@ -86,8 +88,6 @@ int main()
 
 	writeSuperMarketToBFile(&market);
 	freeMarket(&market);
-	
-	system("pause");
 	return 1;
 }
 

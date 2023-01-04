@@ -15,17 +15,17 @@ int writeSuperMarketToBFile(const SuperMarket* sm)
 		perror("Error opening file");
 		exit(EXIT_FAILURE);
 	}
-	int len = (int)strlen(sm->name) + 1;
-	if (fwrite(&len, sizeof(int), 1, fp) != 1) {
+	int name_len = (int)strlen(sm->name) + 1;
+	if (fwrite(&name_len, sizeof(int), 1, fp) != 1) {
 		return 0;
 	}
 		
-	if (fwrite(sm->name, sizeof(char), len, fp) != len) {
+	if (fwrite(sm->name, sizeof(char), name_len, fp) != name_len) {
 		return 0;
 	}
 	//writeProductArrToBFile(fp,&sm->products.head,getNumOfProducts(&sm->products.head));
 	writeAddressToBFile(sm, fp);
-
+	writeProductArrToBFile(fp,&sm->products.head,getNumOfProducts(&sm->products.head));
 	fclose(fp);
 }
 
@@ -65,14 +65,15 @@ int writeProductArrToBFile(FILE* file, NODE* head, int count)
 			fclose(file);
 			return 0;
 		}
+		temp = temp->next;
 	}
 	return 1;
 }
 
-int writeAddressToBFile(const SuperMarket* sm, const FILE* file)
+int writeAddressToBFile(const SuperMarket* sm,  FILE* file)
 {
 	//street
-	int len_street = (int)strlen(&sm->location.street) + 1;
+	int len_street = (int)strlen(sm->location.street) + 1;
 	if (fwrite(&len_street, sizeof(int), 1, file) != 1)
 		return 0;
 	if (fwrite(sm->location.street, sizeof(char), len_street, file) != len_street)
@@ -82,7 +83,7 @@ int writeAddressToBFile(const SuperMarket* sm, const FILE* file)
 	if (fwrite(&sm->location.num, sizeof(int), 1, file) != 1)
 		return 0;
 	//city
-	int len_city = (int)strlen(&sm->location.city) + 1;
+	int len_city = (int)strlen(sm->location.city) + 1;
 	if (fwrite(&len_city, sizeof(int), 1, file) != 1)
 		return 0;
 	if (fwrite(sm->location.city, sizeof(char), len_city, file) != len_city)
@@ -120,10 +121,10 @@ int readAddressFromBFile(SuperMarket* sm, const FILE* file)
 		return 0;
 	sm->location.city = (char*)malloc(len_city * sizeof(char));
 
-	if (!(&sm->location.city)) {
+	if (!(sm->location.city)) {
 		return 0;
 	}
-	if (fread(&sm->location.city, sizeof(char), len_city, file) != len_city)
+	if (fread(sm->location.city, sizeof(char), len_city, file) != len_city)
 	{
 		free(&sm->location.city);
 		return 0;
@@ -150,6 +151,7 @@ int readSuperMarketFromBFile(SuperMarket* sm)
 		return 0;
 	}
 	readAddressFromBFile(sm,fp);
+	readProductArrFromBFile(fp, sm);
 	printf("%s \n", sm->name);
 	
 	// close file
@@ -161,16 +163,18 @@ int readSuperMarketFromBFile(SuperMarket* sm)
 
 int readProductFromBFile(FILE* file, Product* p)
 {
-	if (!p->name)
-		return 0;
+	*p->name = malloc(sizeof(char)*(NAME_LENGTH + 1));
 	if (fread(p->name, sizeof(char), NAME_LENGTH + 1, file) != NAME_LENGTH + 1)
 	{
 		return 0;
 	}
+	printf("%s", p->name);
+	*p->barcode = malloc(sizeof(char) * (BARCODE_LENGTH + 1));
 	if (fread(p->barcode, sizeof(char), BARCODE_LENGTH + 1, file) != BARCODE_LENGTH + 1)
 	{
 		return 0;
 	}
+	printf("%s", p->barcode);
 	if (fread(&p->count, sizeof(int), 1, file) !=  1)
 	{
 		return 0;
@@ -186,23 +190,29 @@ int readProductFromBFile(FILE* file, Product* p)
 	return 1;
 }
 
-int readProductArrFromBFile(const char* file,SuperMarket* pMarket ,int* pCount)
+int readProductArrFromBFile(const char* file,SuperMarket* pMarket)
 {
-
+	int count;
+	if (fread(&count, sizeof(int), 1, file) != 1) {
+		return 0;
+	}
 	if (!L_init(&pMarket->products)) {
 		return 0;
 	};
 
-	for (int i = 0; i < *pCount; i++)
+	for (int i = 0; i < count; i++)
 	{
-		Product* pProd =malloc(sizeof(Product*));
+		Product* pProd =(Product*) malloc(sizeof(Product));
 		if (!readProductFromBFile(file,pProd))
 		{
+		
 			fclose(file);
 			return 0;
 		}
-		if (!L_insert(&pMarket->products.head, pProd, compareProductsByBarcode))
+		if (!L_insert(&pMarket->products.head, pProd, compareProductsByBarcode)) {
 			return 0;
+		}
+		printProduct(pProd);
 	}
 	return 1;
 }

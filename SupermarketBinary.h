@@ -8,10 +8,10 @@
 int writeSuperMarketToBFile(const SuperMarket* sm);
 int writeProductToBFile(const Product* prod, FILE* file);
 int writeProductArrToBFile(FILE* file, NODE* head, int count);
-int writeAddressToBFile(const SuperMarket* sm, const FILE* file);
+int writeAddressToBFile(const SuperMarket* sm, FILE* file);
 
 //Read
 int readSuperMarketFromBFile(SuperMarket* sm);
 int readProductFromBFile(FILE* file, Product* p);
-int readProductArrFromBFile(const char* file, SuperMarket* pMarket, int* pCount);
+int readProductArrFromBFile(const char* file, SuperMarket* pMarket);
 int readAddressFromBFile(SuperMarket* sm, const FILE* file);
