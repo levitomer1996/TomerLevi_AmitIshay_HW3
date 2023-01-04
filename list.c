@@ -36,8 +36,6 @@ NODE* L_insert(NODE* pNode, DATA Value, int compare(const void*, const void*))
 	if (newNode == NULL) return NULL;
 	newNode->key = Value;
 
-
-
 	NODE* curr = pNode;
 	while (curr->next != NULL && compare(Value, curr->next->key) >= 0) {
 		curr = curr->next;

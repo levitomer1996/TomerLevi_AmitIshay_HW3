@@ -25,7 +25,7 @@ int writeSuperMarketToBFile(const SuperMarket* sm)
 	}
 	//writeProductArrToBFile(fp,&sm->products.head,getNumOfProducts(&sm->products.head));
 	writeAddressToBFile(sm, fp);
-	writeProductArrToBFile(fp,&sm->products.head,getNumOfProducts(&sm->products.head));
+	writeProductArrToBFile(fp,&sm->products,getNumOfProducts(&sm->products.head));
 	fclose(fp);
 }
 
@@ -34,7 +34,12 @@ int writeProductToBFile(const Product* prod, FILE* file)
 	if (fwrite(prod->name, sizeof(char), NAME_LENGTH + 1, file) != NAME_LENGTH + 1) {
 		return 0;
 	}
+	printf("%s", prod->name);
 	if (fwrite(prod->barcode, sizeof(char), BARCODE_LENGTH + 1, file) != BARCODE_LENGTH + 1) {
+		return 0;
+	}
+	printf("%s", prod->barcode);
+	if (fwrite(&prod->price, sizeof(float), 1, file) != 1) {
 		return 0;
 	}
 	if (fwrite(&prod->price, sizeof(float), 1, file) != 1) {
@@ -48,19 +53,24 @@ int writeProductToBFile(const Product* prod, FILE* file)
 	}
 }
 
-int writeProductArrToBFile(FILE* file, NODE* head, int count)
+int writeProductArrToBFile(FILE* file, LIST* pList, int count)
 {
 	
-	if (!file || !head)
+	if (!file || !pList )
 		return 0;
 	if (fwrite(&count, sizeof(int), 1, file) != 1)
 	{
 		fclose(file);
 		return 0;
 	}
-	NODE* temp = head;
+
+	NODE* temp = pList->head.next;
+	Product* tempP = temp->key;
+	printProduct(tempP);
+	
 	while (temp != NULL) {
-		if (!writeProductToBFile(&temp->key, file))
+		
+		if (!writeProductToBFile(temp->key, file))
 		{
 			fclose(file);
 			return 0;
@@ -109,7 +119,6 @@ int readAddressFromBFile(SuperMarket* sm, const FILE* file)
 		free(&sm->location.street);
 		return 0;
 	}
-	printf("%s \n", sm->location.street);
 	
 	if (fread(&sm->location.num, sizeof(int), 1, file) != 1)
 	{
@@ -129,14 +138,15 @@ int readAddressFromBFile(SuperMarket* sm, const FILE* file)
 		free(&sm->location.city);
 		return 0;
 	}
-	printf("%s", sm->location.city);
 	return 1;
 }
 
 int readSuperMarketFromBFile(SuperMarket* sm)
 {
 	FILE* fp = fopen("Supermarket.bin", "rb");
-	
+	if (!fp) {
+		return 0;
+	}
 	int len;
 	if (fread(&len, sizeof(int), 1, fp) != 1)
 		return 0;
@@ -152,7 +162,6 @@ int readSuperMarketFromBFile(SuperMarket* sm)
 	}
 	readAddressFromBFile(sm,fp);
 	readProductArrFromBFile(fp, sm);
-	printf("%s \n", sm->name);
 	
 	// close file
 	fclose(fp);
@@ -168,13 +177,11 @@ int readProductFromBFile(FILE* file, Product* p)
 	{
 		return 0;
 	}
-	printf("%s", p->name);
 	*p->barcode = malloc(sizeof(char) * (BARCODE_LENGTH + 1));
 	if (fread(p->barcode, sizeof(char), BARCODE_LENGTH + 1, file) != BARCODE_LENGTH + 1)
 	{
 		return 0;
 	}
-	printf("%s", p->barcode);
 	if (fread(&p->count, sizeof(int), 1, file) !=  1)
 	{
 		return 0;

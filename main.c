@@ -24,12 +24,14 @@ int main()
 	
 	SuperMarket	market;
 	
-	readSuperMarketFromBFile(&market); 
-	printSuperMarket(&market);
-	if (!initSuperMarket(&market))
-	{
-		printf("error init  Super Market");
-		return 0;
+	int isBinExist = readSuperMarketFromBFile(&market); 
+	
+	if (!isBinExist) {
+		if (!initSuperMarket(&market))
+		{
+			printf("error init  Super Market");
+			return 0;
+		}
 	}
 
 	int option;
