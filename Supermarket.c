@@ -344,12 +344,6 @@ Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode)
 
 	if (!(&pMarket->products.head)) return NULL;
 
-	printf("\n");
-	for (tmp = &pMarket->products.head.next; tmp; tmp = tmp->next)
-		printProduct(tmp->key);
-	printf("\n");
-	
-	return NULL;
 }
 
 Customer* FindCustomerByName(SuperMarket* pMarket, const char* name)
