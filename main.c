@@ -5,7 +5,7 @@
 #include "main.h"
 #include "General.h"
 #include "Supermarket.h"
-
+#include "SupermarketBinary.h"
 
 
 
@@ -21,8 +21,9 @@ const char* menuStrings[eNofOptions] = { "Show SuperMarket", "Add Product",
 
 int main()
 {
+	
 	SuperMarket	market;
-
+	readSuperMarketFromBFile(&market);
 	if (!initSuperMarket(&market))
 	{
 		printf("error init  Super Market");
@@ -83,7 +84,7 @@ int main()
 		}
 	} while (!stop);
 
-
+	writeSuperMarketToBFile(&market);
 	freeMarket(&market);
 	
 	system("pause");

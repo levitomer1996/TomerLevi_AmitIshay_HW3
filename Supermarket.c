@@ -343,7 +343,6 @@ Product* getProductByBarcode(SuperMarket* pMarket, const char* barcode)
 	strcpy(tempP.barcode, barcode);
 	NODE* p = L_find(pMarket->products.head.next, &tempP, compareProductsByBarcode);
 	return p ? p->key : NULL;
-
 }
 
 Customer* FindCustomerByName(SuperMarket* pMarket, const char* name)

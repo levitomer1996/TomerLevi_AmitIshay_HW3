@@ -120,4 +120,31 @@ void makeASort(SuperMarket* pMarket)
 	sortCustomers(pMarket);
 }
 
+int getNumOfProducts(NODE* productHead)
+{
+	int count = 0;
+	NODE* temp = productHead;
+	while (temp != NULL) {
+		temp = temp->next;
+		count++;
+	}
+	return count;
+}
+
+Product** getProductsAsArray(SuperMarket* pMarket)
+{
+	NODE* temp = &pMarket->products.head;
+	Product** pArray =(Product**) malloc(sizeof(Product*));
+	if (!pArray&& !temp) {
+		return NULL;
+	}
+	int count = 0;
+	while (!temp)
+	{
+		pArray[count++] = temp->key;
+		temp = temp->next;
+	}
+	return pArray;
+}
+
 
