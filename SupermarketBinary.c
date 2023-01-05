@@ -6,7 +6,6 @@
 
 
 
-
 int writeSuperMarketToBFile(const SuperMarket* sm)
 {
 	FILE* fp = fopen("Supermarket.bin", "wb");
