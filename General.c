@@ -128,7 +128,7 @@ int getNumOfProducts(NODE* productHead)
 		temp = temp->next;
 		count++;
 	}
-	return count;
+	return count - 1;
 }
 
 Product** getProductsAsArray(SuperMarket* pMarket)

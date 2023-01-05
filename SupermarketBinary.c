@@ -26,6 +26,7 @@ int writeSuperMarketToBFile(const SuperMarket* sm)
 	//writeProductArrToBFile(fp,&sm->products.head,getNumOfProducts(&sm->products.head));
 	writeAddressToBFile(sm, fp);
 	writeProductArrToBFile(fp,&sm->products,getNumOfProducts(&sm->products.head));
+
 	fclose(fp);
 }
 
@@ -34,20 +35,18 @@ int writeProductToBFile(const Product* prod, FILE* file)
 	if (fwrite(prod->name, sizeof(char), NAME_LENGTH + 1, file) != NAME_LENGTH + 1) {
 		return 0;
 	}
-	printf("%s", prod->name);
+
 	if (fwrite(prod->barcode, sizeof(char), BARCODE_LENGTH + 1, file) != BARCODE_LENGTH + 1) {
-		return 0;
-	}
-	printf("%s", prod->barcode);
-	if (fwrite(&prod->price, sizeof(float), 1, file) != 1) {
-		return 0;
-	}
-	if (fwrite(&prod->price, sizeof(float), 1, file) != 1) {
 		return 0;
 	}
 	if (fwrite(&prod->count, sizeof(int), 1, file) != 1) {
 		return 0;
 	}
+	if (fwrite(&prod->price, sizeof(float), 1, file) != 1) {
+		return 0;
+	}
+
+	
 	if (fwrite(&prod->type, sizeof(eProductType), 1, file) != 1) {
 		return 0;
 	}
@@ -162,7 +161,8 @@ int readSuperMarketFromBFile(SuperMarket* sm)
 	}
 	readAddressFromBFile(sm,fp);
 	readProductArrFromBFile(fp, sm);
-	
+	sm->customerArr = NULL;
+	sm->customerCount = 0;
 	// close file
 	fclose(fp);
 
