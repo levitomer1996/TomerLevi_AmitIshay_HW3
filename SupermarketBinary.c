@@ -65,7 +65,7 @@ int writeProductArrToBFile(FILE* file, LIST* pList, int count)
 
 	NODE* temp = pList->head.next;
 	Product* tempP = temp->key;
-	printProduct(tempP);
+
 	
 	while (temp != NULL) {
 		
@@ -219,7 +219,7 @@ int readProductArrFromBFile(const char* file,SuperMarket* pMarket)
 		if (!L_insert(&pMarket->products.head, pProd, compareProductsByBarcode)) {
 			return 0;
 		}
-		printProduct(pProd);
+		
 	}
 	return 1;
 }

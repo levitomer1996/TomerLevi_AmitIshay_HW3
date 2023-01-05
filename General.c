@@ -147,4 +147,14 @@ Product** getProductsAsArray(SuperMarket* pMarket)
 	return pArray;
 }
 
+int isPaid(SuperMarket* pMarket)
+{
+	for (int i = 0; i < pMarket->customerCount; i++) {
+		if (pMarket->customerArr[i].pCart != NULL) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
 

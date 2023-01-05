@@ -19,6 +19,7 @@ void		makeASort(SuperMarket* pMarket);
 
 int			getNumOfProducts(NODE* productHead);
 Product**	getProductsAsArray(SuperMarket* pMarket);
+int			isPaid(SuperMarket* pMarket);
 
 #endif
 

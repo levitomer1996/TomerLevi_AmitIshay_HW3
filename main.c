@@ -78,9 +78,15 @@ int main()
 			break;
 
 		case EXIT:
-			printf("Bye bye\n");
-			stop = 1;
-			break;
+			if (!isPaid(&market)) {
+				printf("It seems like not everyone paid.\n");
+				break;
+			}else{
+				printf("Bye bye\n");
+				stop = 1;
+				break;
+			}
+		
 
 		default:
 			printf("Wrong option\n");
