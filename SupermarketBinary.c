@@ -3,12 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "SupermarketBinary.h"
+#define BIN_FILE "SuperMarket.bin"
 
 
 
 int writeSuperMarketToBFile(const SuperMarket* sm)
 {
-	FILE* fp = fopen("Supermarket.bin", "wb");
+	FILE* fp = fopen(BIN_FILE, "wb");
 	if (fp == NULL)
 	{
 		perror("Error opening file");
@@ -141,7 +142,7 @@ int readAddressFromBFile(SuperMarket* sm, const FILE* file)
 
 int readSuperMarketFromBFile(SuperMarket* sm)
 {
-	FILE* fp = fopen("Supermarket.bin", "rb");
+	FILE* fp = fopen(BIN_FILE, "rb");
 	if (!fp) {
 		return 0;
 	}

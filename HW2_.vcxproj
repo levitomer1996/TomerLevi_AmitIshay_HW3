@@ -134,6 +134,7 @@
     <ClCompile Include="ShoppingItem.c" />
     <ClCompile Include="Supermarket.c" />
     <ClCompile Include="SupermarketBinary.c" />
+    <ClCompile Include="SupermarketText.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="ShoppingItem.h" />
     <ClInclude Include="Supermarket.h" />
     <ClInclude Include="SupermarketBinary.h" />
+    <ClInclude Include="SupermarketText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

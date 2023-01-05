@@ -45,6 +45,9 @@
     <ClCompile Include="SupermarketBinary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SupermarketText.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Address.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SupermarketBinary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupermarketText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,7 +6,7 @@
 #include "General.h"
 #include "Supermarket.h"
 #include "SupermarketBinary.h"
-
+#include "SupermarketText.h"
 
 
 
@@ -25,7 +25,7 @@ int main()
 	SuperMarket	market;
 	
 	int isBinExist = readSuperMarketFromBFile(&market); 
-	
+	readCustomerArrFromTextFile(&market);
 	if (!isBinExist) {
 		if (!initSuperMarket(&market))
 		{
@@ -89,6 +89,7 @@ int main()
 	} while (!stop);
 
 	writeSuperMarketToBFile(&market);
+	writeCustomerArrToTextFile(market.customerArr, market.customerCount);
 	freeMarket(&market);
 	return 1;
 }
