@@ -12,6 +12,7 @@
 
 const char* sortOptions[eNoOpt] = { "Sorted by name", "Sorted by shop time",
 								"Sorted by money spent" };
+int sorted = 0;
 
 int		initSuperMarket(SuperMarket* pMarket)
 {
@@ -195,13 +196,15 @@ void sortCustomers(SuperMarket* pMarket)
 	{
 	case SortedByName:
 		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByName);
-		
+		sorted = 1;
 		break;
 	case SortedByShopTimes:
 		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByShopTimes);
+		sorted = 2;
 		break;
 	case SortedByTotalSpend:
 		qsort(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByTotalSpend);
+		sorted = 3;
 		break;
 	default:
 		break;
@@ -314,6 +317,70 @@ void printSortEnum(SORTOPTIONS op)
 	default:
 		break;
 	}
+}
+
+Customer* searchBCustomer(SuperMarket* pMarket)
+
+{
+	
+	switch (sorted)
+	{
+	case 0:
+		printf("Customer list is not sorted.");
+		return NULL;
+	case 1: {
+		char* name = getStrExactLength("Please enter the name of the customer you would like to find");
+
+		return searchBCustomerByName(pMarket, name);
+		
+	}
+	case 2: {
+		int shoppingTimes = 0;
+		printf("Please insert shopping times \n");
+		scanf_s("%d", &shoppingTimes);
+		return searchBCustomerByShoppingTimes(pMarket, shoppingTimes);
+	}
+	case 3: {
+		int total = 0;
+		printf("Please insert total spent \n");
+		scanf_s("%d", &total);
+		return searchBCustomerByShoppingTimes(pMarket, total);
+	}
+	default:
+		break;
+	}
+}
+
+Customer* searchBCustomerByName(SuperMarket* pMarket, char* name)
+{
+	Customer temp;
+	temp.name = name;
+	Customer* pCust = (Customer*)bsearch(&temp, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByName);
+	if (!pCust) {
+		printf("Customer not found");
+		return NULL;
+	}
+	return pCust;
+}
+
+Customer* searchBCustomerByShoppingTimes(SuperMarket* pMarket, int times)
+{
+	Customer* pTemp = (Customer*)malloc(sizeof(Customer));
+	Customer* pCust;
+	if (!pTemp) return NULL;
+	pTemp->shopTimes = times;
+	pCust = (Customer*)bsearch(pTemp, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByShopTimes);
+	if (!pCust) {
+		printf("Customer not found");
+		return NULL;
+	}
+	return pCust;
+}
+
+Customer* searchBCustomerByTotalSpent(SuperMarket* pMarket, int totalSpent)
+{
+	Customer* pCust = bsearch(totalSpent, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByTotalSpend);
+	return pCust;
 }
 
 void	getUniquBarcode(char* barcode, SuperMarket* pMarket)

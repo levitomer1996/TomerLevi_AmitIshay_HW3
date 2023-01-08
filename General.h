@@ -21,5 +21,6 @@ int			getNumOfProducts(NODE* productHead);
 Product**	getProductsAsArray(SuperMarket* pMarket);
 int			isPaid(SuperMarket* pMarket);
 
+void		searchCustomer(SuperMarket* pMarket);
 #endif
 

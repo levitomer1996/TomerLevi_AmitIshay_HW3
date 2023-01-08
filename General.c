@@ -157,4 +157,13 @@ int isPaid(SuperMarket* pMarket)
 	return 1;
 }
 
+void searchCustomer(SuperMarket* pMarket)
+{
+	Customer* pCust = searchBCustomer(pMarket);
+	if (pCust) {
+		printCustomer(pCust);
+	}
+	
+}
+
 

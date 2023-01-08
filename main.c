@@ -40,6 +40,7 @@ int main()
 	do
 	{
 		option = menu();
+
 		switch (option)
 		{
 		case eShowSuperMarket:
@@ -73,6 +74,7 @@ int main()
 			makeASort(&market);
 			break;
 		case eSearchCustomer:
+			searchCustomer(&market);
 			break;
 		case ePrintProductByType:
 			printProductByType(&market);

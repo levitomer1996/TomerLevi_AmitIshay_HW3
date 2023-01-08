@@ -74,9 +74,15 @@ int comapreCustomerByShopTimes(void* v1, void* v2)
 {
 	Customer* c1 = (Customer*)v1;
 	Customer* c2 = (Customer*)v2;
-	if (c1->shopTimes > c2->shopTimes) return -1;
-	else if (c1->shopTimes < c2->shopTimes) return 1;
-	else return 0;
+	if (c1->shopTimes < c2->shopTimes) {
+		return 1;
+	}
+	else if (c1->shopTimes > c2->shopTimes) {
+		return -1;
+	}
+	else {
+		return 0;
+	}
 }
 
 int comapreCustomerByTotalSpend(void* v1, void* v2)
