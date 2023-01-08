@@ -16,7 +16,7 @@ int menu();
 
 
 const char* menuStrings[eNofOptions] = { "Show SuperMarket", "Add Product",
-								"Add Customer", "Customer Shopping","Print Shopping Cart","Customer Pay","Sort Customers",
+								"Add Customer", "Customer Shopping","Print Shopping Cart","Customer Pay","Sort Customers","Search Customers",
 								"Print Product By Type"};
 
 int main()
@@ -72,7 +72,8 @@ int main()
 		case eSortCustomer:
 			makeASort(&market);
 			break;
-
+		case eSearchCustomer:
+			break;
 		case ePrintProductByType:
 			printProductByType(&market);
 			break;
