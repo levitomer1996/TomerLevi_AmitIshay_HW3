@@ -297,7 +297,22 @@ Product* getProductFromUser(SuperMarket* pMarket, char* barcode)
 
 void	freeMarket(SuperMarket* pMarket)
 {
+	//free Customers
+	free(pMarket->name);
+	freeAddress(&pMarket->location);
+	generalArrayFunction(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), freeCustomer);
+	freeProductsNode(&pMarket->products);
 	
+}
+
+void freeProductsNode(LIST* head)
+{
+	L_free(head);
+}
+
+void freeProductNode(SuperMarket* pMarket)
+{
+
 }
 
 void printSortEnum(SORTOPTIONS op)

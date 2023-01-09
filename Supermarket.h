@@ -45,6 +45,7 @@ Customer* getCustomerWhoShop(SuperMarket* pMarket);
 Product* getProductAndCount(SuperMarket* pMarket, int* pCount);
 
 void	freeMarket(SuperMarket* pMarket);
+void	freeProductsNode(LIST* head);
 
 void printSortEnum(SORTOPTIONS op);
 Customer* searchBCustomer(SuperMarket* pMarket);

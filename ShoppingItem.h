@@ -10,3 +10,4 @@ typedef struct
 
 void			printItem(const ShoppingItem* pItem);
 ShoppingItem*	createItem(const char* barcode, float price, int count);
+void			freeShoppingItem(ShoppingItem* item);
