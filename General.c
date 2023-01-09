@@ -166,4 +166,13 @@ void searchCustomer(SuperMarket* pMarket)
 	
 }
 
+const void* generalArrayFunction(const void* array, int arraySize, size_t elementSize, void(f)(void* element))
+{
+	for (int i = 0; i < arraySize; i++)
+	{
+		f((char*)array + i * elementSize);
+	}
+}
+
+
 

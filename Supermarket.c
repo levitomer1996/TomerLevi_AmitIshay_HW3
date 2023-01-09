@@ -174,8 +174,7 @@ void	printAllProducts(const SuperMarket* pMarket)
 void	printAllCustomers(const SuperMarket* pMarket)
 {
 	printf("There are %d listed customers\n", pMarket->customerCount);
-	for (int i = 0; i < pMarket->customerCount; i++)
-		printCustomer(&pMarket->customerArr[i]);
+	generalArrayFunction(pMarket->customerArr, pMarket->customerCount, sizeof(Customer), printCustomer);
 }
 
 void sortCustomers(SuperMarket* pMarket)

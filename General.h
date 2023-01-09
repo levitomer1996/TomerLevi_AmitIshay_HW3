@@ -22,5 +22,6 @@ Product**	getProductsAsArray(SuperMarket* pMarket);
 int			isPaid(SuperMarket* pMarket);
 
 void		searchCustomer(SuperMarket* pMarket);
+const void* generalArrayFunction(const void* array, int arraySize, size_t elementSize, void (f)(void* element));
 #endif
 
