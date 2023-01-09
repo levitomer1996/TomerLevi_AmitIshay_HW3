@@ -25,8 +25,8 @@ int main()
 	SuperMarket	market;
 	
 	int isBinExist = readSuperMarketFromBFile(&market); 
-	readCustomerArrFromTextFile(&market);
-	if (!isBinExist) {
+	 readCustomerArrFromTextFile(&market);
+	if (!isBinExist ) {
 		if (!initSuperMarket(&market))
 		{
 			printf("error init  Super Market");

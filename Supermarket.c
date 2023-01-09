@@ -365,11 +365,12 @@ Customer* searchBCustomerByName(SuperMarket* pMarket, char* name)
 
 Customer* searchBCustomerByShoppingTimes(SuperMarket* pMarket, int times)
 {
-	Customer* pTemp = (Customer*)malloc(sizeof(Customer));
+	
+	Customer cust;
+	
+	cust.shopTimes = times;
 	Customer* pCust;
-	if (!pTemp) return NULL;
-	pTemp->shopTimes = times;
-	pCust = (Customer*)bsearch(pTemp, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByShopTimes);
+	 pCust = (Customer*)bsearch(&cust, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByShopTimes);
 	if (!pCust) {
 		printf("Customer not found");
 		return NULL;

@@ -4,7 +4,7 @@
 typedef struct
 {
 	char*	name;
-	int*	shopTimes;
+	int	shopTimes;
 	float totalSpend;
 	ShoppingCart*	pCart;
 }Customer;
