@@ -25,14 +25,15 @@ int main()
 	SuperMarket	market;
 	
 	int isBinExist = readSuperMarketFromBFile(&market); 
-	 readCustomerArrFromTextFile(&market);
-	if (!isBinExist ) {
+	 int isTextExist = readCustomerArrFromTextFile(&market);
+	if (!isBinExist || !isTextExist) {
 		if (!initSuperMarket(&market))
 		{
 			printf("error init  Super Market");
 			return 0;
 		}
 	}
+	else { printf("Supermarket initialized! \n"); }
 
 	int option;
 	int stop = 0;

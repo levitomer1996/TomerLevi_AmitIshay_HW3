@@ -48,10 +48,13 @@ int readCustomerArrFromTextFile(SuperMarket* pMarket)
 {
 	FILE* fp;
 	fp = fopen(TEXT_FILE, "r");
+	if (!fp) {
+		return 0;
+	}
 	if (fscanf(fp, "%d", &pMarket->customerCount) != 1)
 	{
 		fclose(fp);
-		return NULL;
+		return 0;
 	}
 	pMarket->customerArr = (Customer*)malloc(sizeof(Customer) * pMarket->customerCount);
 	if (!pMarket->customerArr) return 0;
