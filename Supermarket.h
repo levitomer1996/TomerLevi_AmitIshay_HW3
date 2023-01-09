@@ -50,4 +50,4 @@ void printSortEnum(SORTOPTIONS op);
 Customer* searchBCustomer(SuperMarket* pMarket);
 Customer* searchBCustomerByName(SuperMarket* pMarket, char* name);
 Customer* searchBCustomerByShoppingTimes(SuperMarket* pMarket, int times);
-Customer* searchBCustomerByTotalSpent(SuperMarket* pMarket, int totalSpent);
+Customer* searchBCustomerByTotalSpent(SuperMarket* pMarket, float totalSpent);

@@ -341,10 +341,13 @@ Customer* searchBCustomer(SuperMarket* pMarket)
 		return searchBCustomerByShoppingTimes(pMarket, shoppingTimes);
 	}
 	case 3: {
-		int total = 0;
-		printf("Please insert total spent \n");
-		scanf_s("%d", &total);
-		return searchBCustomerByShoppingTimes(pMarket, total);
+		float totalSpend;
+		printf("Please Enter the Total Spend of the customer you are trying to find:\n");
+		float input;
+
+		scanf_s("%f", &input);
+		
+		return searchBCustomerByTotalSpent(pMarket, input);
 	}
 	default:
 		break;
@@ -378,9 +381,16 @@ Customer* searchBCustomerByShoppingTimes(SuperMarket* pMarket, int times)
 	return pCust;
 }
 
-Customer* searchBCustomerByTotalSpent(SuperMarket* pMarket, int totalSpent)
+Customer* searchBCustomerByTotalSpent(SuperMarket* pMarket, float totalSpent)
 {
-	Customer* pCust = bsearch(totalSpent, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByTotalSpend);
+	Customer cust;
+	cust.totalSpend = totalSpent;
+		Customer* pCust;
+	pCust = (Customer*)bsearch(&cust, pMarket->customerArr, pMarket->customerCount, sizeof(Customer), comapreCustomerByTotalSpend);
+	if (!pCust) {
+		printf("Customer not found");
+		return NULL;
+	}
 	return pCust;
 }
 
