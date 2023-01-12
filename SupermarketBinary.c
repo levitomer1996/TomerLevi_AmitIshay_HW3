@@ -55,26 +55,26 @@ int writeProductToBFile(const Product* prod, FILE* file)
 int writeProductArrToBFile(FILE* file, LIST* pList, int count)
 {
 	
-	if (!file || !pList || count == 0)
+	if (!file || !pList)
 		return 0;
 	if (fwrite(&count, sizeof(int), 1, file) != 1)
 	{
 		fclose(file);
 		return 0;
 	}
+	if (count > 0) {
+		NODE* temp = pList->head.next;
+		Product* tempP = temp->key;
 
-	NODE* temp = pList->head.next;
-	Product* tempP = temp->key;
+		while (temp != NULL) {
 
-	
-	while (temp != NULL) {
-		
-		if (!writeProductToBFile(temp->key, file))
-		{
-			fclose(file);
-			return 0;
+			if (!writeProductToBFile(temp->key, file))
+			{
+				fclose(file);
+				return 0;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
 	}
 	return 1;
 }
@@ -207,19 +207,21 @@ int readProductArrFromBFile(const char* file,SuperMarket* pMarket)
 		return 0;
 	};
 	
-	for (int i = 0; i < count; i++)
-	{
-		Product* pProd =(Product*) malloc(sizeof(Product));
-		if (!readProductFromBFile(file,pProd))
+	if (count > 0) {
+		for (int i = 0; i < count; i++)
 		{
-		
-			fclose(file);
-			return 0;
+			Product* pProd = (Product*)malloc(sizeof(Product));
+			if (!readProductFromBFile(file, pProd))
+			{
+
+				fclose(file);
+				return 0;
+			}
+			if (!L_insert(&pMarket->products.head, pProd, compareProductsByBarcode)) {
+				return 0;
+			}
+
 		}
-		if (!L_insert(&pMarket->products.head, pProd, compareProductsByBarcode)) {
-			return 0;
-		}
-		
 	}
 	return 1;
 }
