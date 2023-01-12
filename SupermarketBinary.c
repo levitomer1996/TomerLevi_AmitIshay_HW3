@@ -55,7 +55,7 @@ int writeProductToBFile(const Product* prod, FILE* file)
 int writeProductArrToBFile(FILE* file, LIST* pList, int count)
 {
 	
-	if (!file || !pList )
+	if (!file || !pList || count == 0)
 		return 0;
 	if (fwrite(&count, sizeof(int), 1, file) != 1)
 	{
@@ -206,7 +206,7 @@ int readProductArrFromBFile(const char* file,SuperMarket* pMarket)
 	if (!L_init(&pMarket->products)) {
 		return 0;
 	};
-
+	
 	for (int i = 0; i < count; i++)
 	{
 		Product* pProd =(Product*) malloc(sizeof(Product));

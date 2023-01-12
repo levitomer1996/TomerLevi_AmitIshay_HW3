@@ -121,7 +121,6 @@ int L_print(LIST* pList, void print(const void*))
 	NODE* tmp;
 	int		c = 0;
 
-	if (!pList) return 0;
 
 	printf("\n");
 	for (tmp = pList->head.next; tmp; tmp = tmp->next, c++)

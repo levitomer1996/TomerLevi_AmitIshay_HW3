@@ -167,8 +167,7 @@ void	printAllProducts(const SuperMarket* pMarket)
 	printf("%-20s %-10s\t", "Name", "Barcode");
 	printf("%-20s %-10s %s\n", "Type", "Price", "Count In Stoke");
 	printf("--------------------------------------------------------------------------------\n");
-	L_print(&pMarket->products,printProduct);
-	
+	L_print(&pMarket->products, printProduct);
 }
 
 void	printAllCustomers(const SuperMarket* pMarket)

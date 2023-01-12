@@ -22,8 +22,8 @@ ShoppingItem*	createItem(const char* barcode, float price, int count)
 	return pItem;
 }
 
-void freeShoppingItem(ShoppingItem* item)
+void	freeShoppingItem(void* item)
 {
-	free(item->barcode);
-
+	ShoppingItem* pItem = *(ShoppingItem**)item;
+	free(pItem);
 }
